@@ -45,6 +45,7 @@
         <div class="show-image"><img id="myImage" v-bind:src="link_image"></div>
             <sent-result
                 v-bind:isMultiChoice="isMultiChoice"
+                v-bind:isLongResponse="isLongResponse"
                 v-on:sentResult="sentResult"
             />
    </div>
@@ -66,6 +67,7 @@ export default defineComponent({
     const isLongResponse = ref(false)
     const link_image = ref('aa')
     const all_data = ref([1, 4])
+    const id_question = ref('0')
     const getdata = async () => {
       await axios.get('http://127.0.0.1:8000/data/').then(rs => {
         all_data.value = JSON.parse(rs.data)
@@ -83,14 +85,17 @@ export default defineComponent({
         isLongResponse.value = true
       }
       link_image.value =  data[6]
+      id_question.value = data[0]
     }
 
-    const sentResult = (result: any) => {
+    const sentResult =  async (result: any) => {
       console.log('sentResult', result)
+      console.log('http://127.0.0.1:8000/' + '1/' + result + '/' + id_question.value)
+      await axios.get('http://127.0.0.1:8000/receive/' + '1/' + result + '/' + id_question.value)
     }
-
 
     return {
+      id_question,
       getdata,
       all_data,
       link_image,

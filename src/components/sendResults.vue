@@ -16,6 +16,11 @@
        <button v-on:click="clickEventSent">Sent {{student_ans}}</button>
     </div>
   </div>
+<!--  <div class="sentResult" v-if="isMultiChoice">-->
+<!--    <div>-->
+<!--       <button v-on:click="clickEventSent">Sent {{student_ans}}</button>-->
+<!--    </div>-->
+<!--  </div>-->
 </template>
 
 <script>
@@ -26,6 +31,9 @@ export default defineComponent({
   name: 'sentResult',
   props: {
     isMultiChoice: {
+      type: Boolean
+    },
+    isLongResponse: {
       type: Boolean
     }
   },
